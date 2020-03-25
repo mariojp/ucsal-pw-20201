@@ -1,3 +1,5 @@
+<%@page import="br.ucsal.sistema.model.Usuario"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,9 +10,16 @@
 </head>
 <body>
 
-<p><strong>USUARIO:</strong> <%=session.getAttribute("USUARIO")%></p>
+<%
+Usuario usuario = null;
+if (session.getAttribute("USUARIO") != null){
+	usuario = (Usuario) session.getAttribute("USUARIO"); 
+}
+%>
 
-<a href="./dashboard.jsp" >Home</a>
+<p><strong>USUARIO:</strong> <%=usuario.getLogin()%></p>
+
+<a href="/sistema/private/dashboard.jsp" >Home</a>
 
 <a href="../logout" >Sair</a>
 

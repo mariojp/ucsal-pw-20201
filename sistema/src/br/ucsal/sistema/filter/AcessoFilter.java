@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ucsal.sistema.model.Usuario;
+
 /**
  * Servlet Filter implementation class AcessoFilter
  */
@@ -31,8 +33,8 @@ public class AcessoFilter implements Filter {
 		Object object = httpServletRequest.getSession().getAttribute("USUARIO");
 		
 		if(object != null) {
-			String usuario = (String) object;
-			System.out.println(usuario);
+			Usuario usuario = (Usuario) object;
+			System.out.println(usuario.getLogin());
 
 			chain.doFilter(request, response);
 

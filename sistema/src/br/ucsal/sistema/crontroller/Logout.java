@@ -1,4 +1,4 @@
-package br.ucsal.sistema;
+package br.ucsal.sistema.crontroller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
