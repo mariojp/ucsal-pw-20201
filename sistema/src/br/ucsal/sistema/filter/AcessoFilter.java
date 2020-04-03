@@ -1,15 +1,15 @@
 package br.ucsal.sistema.filter;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import br.ucsal.sistema.model.Usuario;
 
@@ -30,7 +30,7 @@ public class AcessoFilter implements Filter {
 		System.out.println("FILTREI: " + httpServletRequest.getRequestURL());
 		
 		
-		Object object = httpServletRequest.getSession().getAttribute("USUARIO");
+		Object object = httpServletRequest.getSession().getAttribute("usuario");
 		
 		if(object != null) {
 			Usuario usuario = (Usuario) object;
@@ -40,8 +40,9 @@ public class AcessoFilter implements Filter {
 
 		}else {
 			System.out.println("SEM USUARIO NA SESSION");
-			HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-			httpServletResponse.sendRedirect("/sistema/index.jsp?erro=Usuario não logado");
+			request.setAttribute("erro", "É PRECISO ESTAR LOGADO!");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+			dispatcher.forward(request, response);
 		}
 		
 	}

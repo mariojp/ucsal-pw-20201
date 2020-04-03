@@ -1,5 +1,4 @@
-<%@page import="br.ucsal.sistema.model.Usuario"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,17 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>DashBoard</title>
+<jsp:useBean id="usuario" class="br.ucsal.sistema.model.Usuario" scope="session"></jsp:useBean>
 </head>
 <body>
 
-<%
-Usuario usuario = null;
-if (session.getAttribute("USUARIO") != null){
-	usuario = (Usuario) session.getAttribute("USUARIO"); 
-}
-%>
 
-<p><strong>USUARIO:</strong> <%=usuario.getLogin()%></p>
+<p><strong>USUARIO:</strong><c:out value="${usuario.login}" /></p>
 
 <a href="/sistema/private/dashboard.jsp" >Home</a>
 

@@ -1,8 +1,6 @@
 package br.ucsal.sistema.crontroller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,15 +31,21 @@ public class Login extends HttpServlet {
 		String login = request.getParameter("user");
 		String senha = request.getParameter("pass");
 		
+		
+		
 		Usuario usuario = loginController.login(login, senha);
 		
 		if (usuario != null){
-			request.getSession().setAttribute("USUARIO", usuario);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/private/dashboard.jsp");
-			dispatcher.forward(request, response);
+			request.getSession().setAttribute("usuario", usuario);
+			response.sendRedirect("./private/dashboard.jsp");
 
 		}else{
-			response.sendRedirect("/sistema/index.jsp?erro=Erro de Acesso");
+			
+			throw new ServletException("Usuario Invalido");
+
+//			request.setAttribute("erro", "Login ou Senha Invalidos!");
+//			RequestDispatcher dispatcher = request.getRequestDispatcher("./index.jsp");
+//			dispatcher.forward(request, response);
 		}
 
 

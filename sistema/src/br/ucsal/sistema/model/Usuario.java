@@ -10,6 +10,10 @@ public class Usuario /* extends Object */ {
 	private String senha;
 	
 	private String  papel;
+	
+	
+	public Usuario() {
+	}
 
 
 	public Usuario(String login, String senha) {
