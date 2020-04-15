@@ -14,8 +14,11 @@
 <p><strong>USUARIO:</strong><c:out value="${usuario.login}" /></p>
 
 <a href="/sistema/private/dashboard.jsp" >Home</a>
-
+<a href="/sistema/private/usuarios" >Listar Usuarios</a>
+<a href="/sistema/private/usuarios/form" >Inserir Usuario</a>
 <a href="../logout" >Sair</a>
+
+
 
 </body>
 </html>

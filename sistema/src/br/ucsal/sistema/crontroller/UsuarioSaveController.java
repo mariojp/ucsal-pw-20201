@@ -12,42 +12,48 @@ import javax.servlet.http.HttpServletResponse;
 import br.ucsal.sistema.model.Papel;
 import br.ucsal.sistema.model.Usuario;
 import br.ucsal.sistema.servico.LoginService;
+import br.ucsal.sistema.servico.UsuarioService;
 
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/login")
-public class Login extends HttpServlet {
+@WebServlet("/private/usuarios/salvar")
+public class UsuarioSaveController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
 	
-	private LoginService loginController = new LoginService();
+	private UsuarioService service = new UsuarioService();
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String login = request.getParameter("user");
-		String senha = request.getParameter("pass");
+
+		String sid = request.getParameter("id");
+		String login = request.getParameter("login");
+		String senha = request.getParameter("senha");
+		String papelID = request.getParameter("papel");
 		
 		
-		
-		Usuario usuario = loginController.login(login, senha);
-		
-		if (usuario != null){
-			request.getSession().setAttribute("usuario", usuario);
-			response.sendRedirect("./private/dashboard.jsp");
-		}else{
-			throw new ServletException("Usuario Invalido");
-//			request.setAttribute("erro", "Login ou Senha Invalidos!");
-//			RequestDispatcher dispatcher = request.getRequestDispatcher("./index.jsp");
-//			dispatcher.forward(request, response);
+		Usuario usuario = new Usuario();
+		if(sid!=null && !sid.isEmpty()) {
+			usuario.setId(Long.parseLong(sid));
 		}
-
+		usuario.setLogin(login);
+		usuario.setSenha(senha);
+		Papel papel = new Papel();
+		papel.setId(Long.parseLong(papelID));
+		usuario.setPapel(papel);
+		
+		service.salvar(usuario);
+		
+		
+		response.sendRedirect("/sistema/private/usuarios");
 
 		
+
 
 	}
 
