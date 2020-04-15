@@ -13,6 +13,7 @@ public class UsuarioService {
 	private UsuarioDAO dao = new UsuarioDAO();
 	
 	public Usuario salvar(Usuario usuario) {
+		
 		if(usuario.getId() == null) {
 			usuario = dao.save(usuario);
 		}else {

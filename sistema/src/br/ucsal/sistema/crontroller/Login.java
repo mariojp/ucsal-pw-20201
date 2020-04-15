@@ -22,7 +22,7 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	
-	private LoginService loginController = new LoginService();
+	private LoginService service = new LoginService();
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +34,7 @@ public class Login extends HttpServlet {
 		
 		
 		
-		Usuario usuario = loginController.login(login, senha);
+		Usuario usuario = service.login(login, senha);
 		
 		if (usuario != null){
 			request.getSession().setAttribute("usuario", usuario);

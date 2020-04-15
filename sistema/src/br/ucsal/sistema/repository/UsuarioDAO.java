@@ -49,16 +49,7 @@ public class UsuarioDAO {
 			String sql = "SELECT USUARIO_ID, LOGIN, SENHA FROM USUARIOS WHERE LOGIN=? AND SENHA=?";
 			PreparedStatement statement = BancoUtil.getConnection().prepareStatement(sql);
 			statement.setString(1, login);
-			String pass = "";
-			try {
-				MessageDigest md = MessageDigest.getInstance("MD5");
-				md.update(senha.getBytes());
-				byte[] digest = md.digest();
-				pass = DatatypeConverter.printHexBinary(digest).toUpperCase();
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
+			String pass = criptografar(senha);			
 			statement.setString(2, pass);
 			System.out.println(statement);
 			ResultSet resultSet =  statement.executeQuery();
@@ -93,23 +84,15 @@ public class UsuarioDAO {
 	}
 	
 	public Usuario update(Usuario usuario) {
-		String sql = "UPDATE USUARIOS SET LOGIN=?, SENHA=? WHERE USUARIO_ID=?";
+		String sql = "UPDATE USUARIOS SET LOGIN=?, SENHA=?,PAPEL_ID_FK=?  WHERE USUARIO_ID=?";
 		PreparedStatement statement;
 		try {
 			statement = BancoUtil.getConnection().prepareStatement(sql);
 			statement.setString(1, usuario.getLogin());
-			String pass = "";
-			try {
-				MessageDigest md = MessageDigest.getInstance("MD5");
-				md.update(usuario.getSenha().getBytes());
-				byte[] digest = md.digest();
-				pass = DatatypeConverter.printHexBinary(digest).toUpperCase();
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
+			String pass = criptografar(usuario.getSenha());			
 			statement.setString(2, pass);
-			statement.setLong(3, usuario.getId());
+			statement.setLong(3, usuario.getPapel().getId());
+			statement.setLong(4, usuario.getId());
 			statement.execute();
 			
 	
@@ -120,6 +103,22 @@ public class UsuarioDAO {
 
 
 		return null;	}
+
+
+	private String criptografar(String senha) {
+		String pass = "";
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(senha.getBytes());
+			byte[] digest = md.digest();
+			pass = DatatypeConverter.printHexBinary(digest).toUpperCase();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pass;
+	}
+	
 	
 	public Usuario findById(Long id) throws SQLException {
 		String sql = "SELECT USUARIO_ID, LOGIN, PAPEL_ID_FK, NOME, DESCRICAO FROM USUARIOS, PAPEIS WHERE USUARIO_ID=? AND USUARIOS.PAPEL_ID_FK = PAPEIS.PAPEL_ID;";
@@ -149,16 +148,7 @@ public class UsuarioDAO {
 		try {
 			statement = BancoUtil.getConnection().prepareStatement(sql,new String[] { "USUARIO_ID" });
 			statement.setString(1, usuario.getLogin());
-			String pass = "";
-			try {
-				MessageDigest md = MessageDigest.getInstance("MD5");
-				md.update(usuario.getSenha().getBytes());
-				byte[] digest = md.digest();
-				pass = DatatypeConverter.printHexBinary(digest).toUpperCase();
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
+			String pass = criptografar(usuario.getSenha());			
 			statement.setString(2, pass);
 			statement.setLong(3, usuario.getPapel().getId());
 			statement.execute();

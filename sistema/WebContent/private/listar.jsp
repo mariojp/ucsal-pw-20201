@@ -8,6 +8,7 @@
 <title>Lista de Usuarios</title>
 </head>
 <body>
+
 <p><strong>USUARIO:</strong><c:out value="${usuario.login}" /></p>
 
 <a href="/sistema/private/dashboard.jsp" >Home</a>
@@ -17,6 +18,7 @@
 
 
 <h1>USUARIOS</h1>
+
 <table class="table" >
 <tr>
 <th> LOGIN </th>
@@ -30,11 +32,11 @@
  <td> ${u.login} </td>
  <td> ${u.papel.nome} </td>
  <td> <a href="/sistema/private/usuarios/delete?id=${u.id}">EXCLUIR</a>
- 	  <a href="/sistema/private/usuarios/form?id=${u.id}">EDITAR</a></td>
- 
- 
+ 	  <a href="/sistema/private/usuarios/form?id=${u.id}">EDITAR</a></td> 
 <tr>
 </c:forEach>
+
+
 </table>
 
 </body>
